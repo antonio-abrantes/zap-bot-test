@@ -13,9 +13,13 @@ async function start(client: Whatsapp) {
   client.onMessage(async (message: Message) => {
     if (!message.body || message.isGroupMsg) return;
 
-    let response = "";
+    const customerPhone = `+${message.from.replace("@c.us", "")}`;
+    const customerName = message.author;
+    const customerKey = `customer:${customerPhone}:chat`;
+    const orderCode = `#sk-${("00000" + Math.random()).slice(-5)}`;
 
-    response = `Olá! Seu texto foi "${message.content}"`;
+    let response = "";
+    response = `Olá! Seu texto foi "${message.content}"\nPhone: ${customerPhone}\nNome: ${customerName}\n${customerKey}\nOrdem nº: ${orderCode}`;
 
     console.log(message.body);
     console.log(message.from);
